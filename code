@@ -1,0 +1,127 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Parcel Class
+class Parcel {
+    private String parcelId;
+    private String status;
+
+    // Constructor
+    public Parcel(String parcelId, String status) {
+        this.parcelId = parcelId;
+        this.status = status;
+    }
+
+    // Getter
+    public String getParcelId() {
+        return parcelId;
+    }
+
+    // Update Status
+    public void updateStatus(String newStatus) {
+        status = newStatus;
+    }
+
+    // Display Status
+    public void displayStatus() {
+        System.out.println("Parcel ID: " + parcelId);
+        System.out.println("Status: " + status);
+    }
+}
+
+// Courier System Class
+class CourierSystem {
+    private ArrayList<Parcel> parcels = new ArrayList<>();
+
+    // Add Parcel
+    public void addParcel(String id, String status) {
+        parcels.add(new Parcel(id, status));
+        System.out.println("Parcel Added Successfully!");
+    }
+
+    // Update Parcel Status
+    public void updateParcelStatus(String id, String newStatus) {
+        for (Parcel p : parcels) {
+            if (p.getParcelId().equals(id)) {
+                p.updateStatus(newStatus);
+                System.out.println("Status Updated!");
+                return;
+            }
+        }
+        System.out.println("Parcel Not Found!");
+    }
+
+    // Track Parcel
+    public void trackParcel(String id) {
+        for (Parcel p : parcels) {
+            if (p.getParcelId().equals(id)) {
+                p.displayStatus();
+                return;
+            }
+        }
+        System.out.println("Parcel Not Found!");
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        CourierSystem system = new CourierSystem();
+
+        int choice;
+
+        do {
+            System.out.println("\n===== Courier Delivery Tracking System =====");
+            System.out.println("1. Add Parcel");
+            System.out.println("2. Update Parcel Status");
+            System.out.println("3. Track Parcel");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter Parcel ID: ");
+                    String id = sc.nextLine();
+
+                    System.out.print("Enter Status: ");
+                    String status = sc.nextLine();
+
+                    system.addParcel(id, status);
+                    break;
+
+                case 2:
+                    System.out.print("Enter Parcel ID: ");
+                    String updateId = sc.nextLine();
+
+                    System.out.print("Enter New Status: ");
+                    String newStatus = sc.nextLine();
+
+                    system.updateParcelStatus(updateId, newStatus);
+                    break;
+
+                case 3:
+                    System.out.print("Enter Parcel ID: ");
+                    String trackId = sc.nextLine();
+
+                    system.trackParcel(trackId);
+                    break;
+
+                case 4:
+                    System.out.println("Exiting Program...");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
